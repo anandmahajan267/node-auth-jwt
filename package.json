@@ -1,6 +1,11 @@
 {
     "name": "node-auth-jwt",
+    "author": "Anand Mahajan",
     "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "start:dev": "nodemon server.js"
+    },
     "dependencies": {
         "bcrypt": "^3.0.6",
         "body-parser": "^1.19.0",
@@ -11,5 +16,25 @@
         "nodemon": "^1.19.4",
         "passport": "^0.4.0",
         "passport-jwt": "^4.0.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/anandmahajan267/node-auth-jwt"
+    },
+    "keywords": [
+        "NodeJS",
+        "API",
+        "JWT",
+        "authentication",
+        "mongodb",
+        "mongoose",
+        "express",
+        "jwt-authentication",
+        "jwt-tokens",
+        "passport-jwt"
+    ],
+    "devDependencies": {
+        "@babel/core": "^7.6.4",
+        "@babel/preset-env": "^7.6.3"
     }
 }
