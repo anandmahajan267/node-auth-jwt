@@ -1,5 +1,6 @@
 var express = require("express");
 app = express();
+const cors = require('cors');
 var mongoose = require("mongoose");
 
 var bodyParser = require('body-parser');
@@ -10,7 +11,7 @@ var config = require('./src/config/main');
 
 
 var port = 3000;
-
+app.use(cors());
 //use body parser to get api request
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

@@ -4,7 +4,7 @@ var config = require('../config/main')
 
 const signup = (req, res) => {
     if (!req.body.first_name || !req.body.last_name || !req.body.email || !req.body.password) {
-        res.json({ success: false, message: 'Please fill in the required fields to register new user' });
+        res.status(400).json({ success: false, message: 'Please fill in the required fields to register new user' });
     } else {
         var newUser = new User({
             first_name: req.body.first_name,
@@ -15,9 +15,9 @@ const signup = (req, res) => {
         //save new user to database
         newUser.save(function (err) {
             if (err) {
-                return res.status(409).json({ success: false, message: 'this email address already exists.' });
+                return res.status(409).json({ success: false, message: 'This email address already exists.' });
             }
-            res.json({ success: true, message: 'Succesfully created new user.' });
+            res.status(201).json({ success: true, message: 'Succesfully created new user.' });
         });
     }
 }
@@ -31,7 +31,7 @@ const login = (req, res) => {
         }
 
         if (!user) {
-            res.json({ success: false, message: 'user not found.' });
+            res.status(404).json({ success: false, message: 'User not found.' });
         } else {
             //check user password
             user.comparePassword(req.body.password, function (err, isMatch) {
@@ -41,9 +41,16 @@ const login = (req, res) => {
                     var token = jwt.sign(user.toJSON(), config.secret, {
                         expiresIn: 1000//seconds
                     });
-                    res.json({ success: true, token: 'JWT ' + token });
+                    res.json({
+                        success: true, token: 'JWT ' + token, data: {
+                            id: user.id,
+                            email: user.email,
+                            first_name: user.first_name,
+                            last_name: user.last_name,
+                        }
+                    });
                 } else {
-                    res.json({ success: false, message: 'password did not match.' });
+                    res.status(400).json({ success: false, message: 'Password did not match.' });
                 }
 
             });
